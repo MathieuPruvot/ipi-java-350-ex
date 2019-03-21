@@ -89,7 +89,6 @@ public class EmployeTest {
     @ParameterizedTest
     @CsvSource({
            "-0.01",
-           "null",
            "10.01"
     })
     public void augmenterSalaireWithWrongParameter(Double pourcent){
@@ -106,7 +105,7 @@ public class EmployeTest {
     }
     
     @Test
-    public void augmenterSalaire(Double pourcent, Double newSalaire){
+    public void augmenterSalaire(){
         //Given
         Employe employeTest = new Employe("Doe", "Jhon", "T00001", LocalDate.now(),Entreprise.SALAIRE_BASE, 1,1.0);
         

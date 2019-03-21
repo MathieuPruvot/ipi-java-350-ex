@@ -121,7 +121,17 @@ public class Employe {
     }
 
     //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+    /**
+    * méthode d'augmentation de salaire
+     *
+     * @Param pourcentage significatif de l'augmentation à appliquer sur le salaire de l'employé, ce pourcentage doit etre positif et ne dois pas dépasser les 10%
+     **/
+    public void augmenterSalaire(double pourcentage){
+        if(pourcentage<0.0 || pourcentage>10.0)
+            throw new IllegalArgumentException("Le pourcentage d'augmentation doit etre compris entre 0.0 et 10.0");
+        
+        this.salaire = ((int) (this.salaire*(1+pourcentage/100)*100))/100d;
+    }
 
     public Long getId() {
         return id;
