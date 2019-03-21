@@ -115,5 +115,28 @@ public class EmployeTest {
         //Then
         Assert.assertEquals("Le salaire obtenu après augmentation ne correspond pas", 1597.28, employeTest.getSalaire(),0D);
     }
-
+    
+    @ParameterizedTest
+    @CsvSource({
+            "2020-01-01, 0.5, 126",
+            "2020-01-01, 1, 138",
+            "2021-01-01, 0.5, 125",
+            "2021-01-01, 1, 137",
+            "2022-01-01, 0.5, 125",
+            "2022-01-01, 1, 137",
+            "2023-01-01, 0.5, 126",
+            "2023-01-01, 1, 138",
+            "2024-01-01, 0.5, 127",
+            "2024-01-01, 1, 139"
+    })
+    public void getNbRtt(LocalDate date, double tempsPartiel, int nbRttExcpected){
+        //Given
+        Employe employeTest = new Employe("Doe", "Jhon", "T00001", LocalDate.now(),Entreprise.SALAIRE_BASE, 1,tempsPartiel);
+        
+        //When Exception
+        int nbRttCalculated = employeTest.getNbRtt(date);
+        
+        //Then Exception
+        Assert.assertEquals("le nombre de RTT ne correspond pas au nombre attendu", nbRttExcpected, nbRttCalculated);
+    }
 }

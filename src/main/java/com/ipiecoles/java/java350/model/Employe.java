@@ -81,8 +81,7 @@ public class Employe {
      * @return nombre de RTT dont le salarié aura droit
      */
     public Integer getNbRtt(LocalDate date){
-        int nbOfDayThisYear = date.isLeapYear() ? 365 : 366;
-        // on initialise le nombre de RTT avec le nombre de jours de repos hebdomadaire (Samedi, dimanche, ayany 52 semaines en une année cela nous fait donc 104 comme base)
+        // on initialise le nombre de RTT avec le nombre de jours de repos hebdomadaire (Samedi, dimanche, ayant 52 semaines en une année cela nous fait donc 104 comme base)
         int nbRtt = 104;
         switch (LocalDate.of(date.getYear(),1,1).getDayOfWeek()){
             case THURSDAY:
