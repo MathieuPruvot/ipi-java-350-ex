@@ -1,5 +1,6 @@
 package com.ipiecoles.java.java350.model;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -83,6 +84,37 @@ public class EmployeTest {
         //Then
         Assertions.assertEquals(primeAnnuelle, prime);
 
+    }
+    
+    @ParameterizedTest
+    @CsvSource({
+           "-0.01",
+           "null",
+           "10.01"
+    })
+    public void augmenterSalaireWithWrongParameter(Double pourcent){
+        //Given
+        Employe employeTest = new Employe("Doe", "Jhon", "T00001", LocalDate.now(),Entreprise.SALAIRE_BASE, 1,1.0);
+    
+        //When Exception
+        IllegalArgumentException e =
+                Assertions.assertThrows(IllegalArgumentException.class, () ->
+                        employeTest.augmenterSalaire(pourcent)
+                );
+        //Then Exception
+        Assert.assertEquals(e.getMessage(), "Le pourcentage d'augmentation doit etre compris entre 0.0 et 10.0");
+    }
+    
+    @Test
+    public void augmenterSalaire(Double pourcent, Double newSalaire){
+        //Given
+        Employe employeTest = new Employe("Doe", "Jhon", "T00001", LocalDate.now(),Entreprise.SALAIRE_BASE, 1,1.0);
+        
+        //When
+        employeTest.augmenterSalaire(5.0);
+        
+        //Then
+        Assert.assertEquals("Le salaire obtenu après augmentation ne correspond pas", 1597.28, employeTest.getSalaire(),0D);
     }
 
 }
