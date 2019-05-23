@@ -56,4 +56,41 @@ public class EmployeRepositoryTest {
         //Then
         Assertions.assertEquals("40325", lastMatricule);
     }
+    
+    @Test
+    public void avgPerformanceWhereMatriculeStartsWith_AucunEmploye(){
+        //Given
+    
+        //When
+        Double avgPerformance = employeRepository.avgPerformanceWhereMatriculeStartsWith("C");
+    
+        //Then
+        Assertions.assertNull(avgPerformance);
+    }
+    
+    @Test
+    public void avgPerformanceWhereMatriculeStartsWith_UnSeulEmploye(){
+        //Given
+        employeRepository.save(new Employe("Doe", "John", "T12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
+    
+        //When
+        Double avgPerformance = employeRepository.avgPerformanceWhereMatriculeStartsWith("T");
+    
+        //Then
+        Assertions.assertEquals(1d,avgPerformance,1d);
+    }
+    
+    @Test
+    public void avgPerformanceWhereMatriculeStartsWith_PlusieursEmployes(){
+        //Given
+        employeRepository.save(new Employe("Doe", "John", "T12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
+        employeRepository.save(new Employe("Doe", "Jane", "T40325", LocalDate.now(), Entreprise.SALAIRE_BASE, 2, 1.0));
+        employeRepository.save(new Employe("Doe", "Jim", "C06432", LocalDate.now(), Entreprise.SALAIRE_BASE, 3, 1.0));
+    
+        //When
+        Double avgPerformance = employeRepository.avgPerformanceWhereMatriculeStartsWith("T");
+        
+        //Then
+        Assertions.assertEquals(1.5,avgPerformance,1d);
+    }
 }

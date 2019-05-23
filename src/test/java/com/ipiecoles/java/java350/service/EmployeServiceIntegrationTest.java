@@ -4,11 +4,14 @@ package com.ipiecoles.java.java350.service;
 import com.ipiecoles.java.java350.exception.EmployeException;
 import com.ipiecoles.java.java350.model.*;
 import com.ipiecoles.java.java350.repository.EmployeRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -57,6 +60,25 @@ public class EmployeServiceIntegrationTest {
 
         //1521.22 * 1.2 * 1.0
         Assertions.assertEquals(1825.46, employe.getSalaire().doubleValue());
+    }
+    
+    @ParameterizedTest
+    @CsvSource({
+            "C00001,10,10,2",
+            "C00001,15,10,6",
+            "C00001,10,15,6",
+            "C00001,10,10,2"
+    })
+    public void calculPerformanceCommercial(String matricule, Long caTraite, Long objectifCa, Integer performance) throws EmployeException {
+        //Given
+        Employe employeTest = new Employe("Doe", "Jhon", matricule, LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1d);
+        employeRepository.save(employeTest);
+        
+        //When
+        employeService.calculPerformanceCommercial(matricule,caTraite,objectifCa);
+        
+        //Then
+        Assert.assertEquals("performance calculé erroné", performance, employeRepository.findByMatricule(matricule).getPerformance());
     }
 
 }
